@@ -409,6 +409,20 @@ static void wt_longstatus_print_change_data(struct wt_status *s,
 
 	status_printf(s, color(WT_STATUS_HEADER, s), "\t");
 	what = wt_status_diff_status_string(status);
+
+	if (want_color(s->use_color)) {
+		switch (status) {
+			case DIFF_STATUS_DELETED:
+				c = GIT_COLOR_BOLD_RED;
+				break;
+			case DIFF_STATUS_ADDED:
+				c = GIT_COLOR_BOLD_MAGENTA;
+				break;
+			default:
+				break;
+		}
+	}
+
 	if (!what)
 		BUG("unhandled diff status %c", status);
 	len = label_width - utf8_strwidth(what);
